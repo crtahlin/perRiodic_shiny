@@ -36,14 +36,17 @@ shinyUI(fluidPage(
                    min = 3,
                    max = 10,
                    step = 1),
-      width = 1
+      width = 2
       
       
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("rcs_basis_plot")
+       plotOutput("rcs_basis_plot"),
+       # plotOutput("cs_basis_plot"),
+       plotOutput("rcs.per_basis_plot"),
+       plotOutput("cs.per_basis_plot")
     )
   )
 ))
