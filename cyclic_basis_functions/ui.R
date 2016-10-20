@@ -19,13 +19,13 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       numericInput("minimum",
-                   "Minimum:",
+                   "Cycle Minimum:",
                    value = 0,
                    min = -365,
                    max = 365,
                    step = 1),
       numericInput("maximum",
-                   "Maximum:",
+                   "Cycle Maximum:",
                    value = 1,
                    min = -365,
                    max = 365,
@@ -36,6 +36,30 @@ shinyUI(fluidPage(
                    min = 3,
                    max = 10,
                    step = 1),
+      # numericInput("xlim_min",
+      #              "X minimum to plot:",
+      #              value = 0,
+      #              min = -365,
+      #              max = 365,
+      #              step = 1),
+      # numericInput("xlim_max",
+      #              "X maximum to plot:",
+      #              value = 1,
+      #              min = -365,
+      #              max = 365,
+      #              step = 1),
+      # numericInput("ylim_min",
+      #              "Y minimum to plot:",
+      #              value = 0,
+      #              min = -365,
+      #              max = 365,
+      #              step = 1),
+      # numericInput("ylim_max",
+      #              "Y maximum to plot:",
+      #              value = 1,
+      #              min = -365,
+      #              max = 365,
+      #              step = 1),
       width = 2
       
       
@@ -43,10 +67,10 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("rcs_basis_plot"),
+       plotOutput("rcs_basis_plot", brush = "brush_rcs_basis"),
        # plotOutput("cs_basis_plot"),
-       plotOutput("rcs.per_basis_plot"),
-       plotOutput("cs.per_basis_plot")
+       plotOutput("rcs_per_basis_plot", brush = "brush_rcs_per_basis"),
+       plotOutput("cs_per_basis_plot", brush = "brush_cs_per_basis")
     )
   )
 ))

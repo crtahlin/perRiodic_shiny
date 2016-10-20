@@ -17,7 +17,7 @@ shinyServer(function(input, output) {
   #############################################################################
   # define / generate parameters ####
   x_values <- reactive({
-    result <- seq(input$minimum, input$maximum, length.out = 1000)
+    result <- seq(input$minimum, input$maximum, length.out = (input$maximum - input$minimum)*1000)
     return(result)
   }) 
   
@@ -42,13 +42,13 @@ shinyServer(function(input, output) {
     return(result)
   })
   
-  cs.basis <- reactive({
-    browser()
-    rcs(x_values(), nk = input$n_knots)
-    result <- rcspline.restate(knot_locations(), rcs.basis())
-    return(result)
-  })
-  
+  # cs.basis <- reactive({
+  #   browser()
+  #   rcs(x_values(), nk = input$n_knots)
+  #   result <- rcspline.restate(knot_locations(), rcs.basis())
+  #   return(result)
+  # })
+  # 
   rcs.per.basis <- reactive({
     result <- rcs.per(x_values(), nk = input$n_knots)
     return(result)
@@ -60,23 +60,34 @@ shinyServer(function(input, output) {
   
   ##############################################################################
   # output plots ####
-  output$rcs_basis_plot <- renderPlot({
-    matplot(x_values(), rcs.basis(), pch=1, xlab="x", ylab="Basis function", main="RCS")
-    abline(v=knot_locations(), lty=2)
-  })
+  
   
   # output$cs_basis_plot <- renderPlot({
   #   matplot(x_values(), cs.basis(), pch=1, xlab="x", ylab="Basis function", main="CS")
   #   abline(v=knot_locations(), lty=2)
   # })
-  
-  output$rcs.per_basis_plot <- renderPlot({
-    matplot(x_values(), rcs.per.basis(), pch=1, xlab="x", ylab="Basis function", main="RCS.PER")
+ 
+  output$rcs_basis_plot <- renderPlot({
+    matplot(x_values(), rcs.basis(), pch=1, xlab="x", ylab="Basis function", main="RCS",
+            xlim = c(input$brush_rcs_basis$xmin, input$brush_rcs_basis$xmax),
+            ylim = c(input$brush_rcs_basis$ymin, input$brush_rcs_basis$ymax),
+            type = "o")
     abline(v=knot_locations(), lty=2)
   })
   
-  output$cs.per_basis_plot <- renderPlot({
-    matplot(x_values(), cs.per.basis(), pch=1, xlab="x", ylab="Basis function", main="CS.PER")
+  output$rcs_per_basis_plot <- renderPlot({
+    matplot(x_values(), rcs.per.basis(), pch=1, xlab="x", ylab="Basis function", main="RCS.PER",
+            xlim = c(input$brush_rcs_per_basis$xmin, input$brush_rcs_per_basis$xmax),
+            ylim = c(input$brush_rcs_per_basis$ymin, input$brush_rcs_per_basis$ymax),
+            type = "o")
+    abline(v=knot_locations(), lty=2)
+  })
+  
+  output$cs_per_basis_plot <- renderPlot({
+    matplot(x_values(), cs.per.basis(), pch=1, xlab="x", ylab="Basis function", main="CS.PER",
+            xlim = c(input$brush_cs_per_basis$xmin, input$brush_cs_per_basis$xmax),
+            ylim = c(input$brush_cs_per_basis$ymin, input$brush_cs_per_basis$ymax),
+            type = "o")
     abline(v=knot_locations(), lty=2)
   })
   
