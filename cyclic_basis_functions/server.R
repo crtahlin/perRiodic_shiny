@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   # construct basis vectors ####
   rcs.basis <- reactive({
     # browser()
-    result <- rcspline.eval(x_values(), nk = input$n_knots)
+    result <- rcspline.eval(x_values(), nk = input$n_knots, inclx = TRUE)
     # summary(result)
     # str(result)
     # class(result)
