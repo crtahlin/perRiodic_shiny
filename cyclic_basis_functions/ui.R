@@ -13,19 +13,19 @@ library(shiny)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("basis functions for cyclic functions"),
+  titlePanel("Shiny App - Basis Functions for Periodic Functions"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
       numericInput("minimum",
-                   "Cycle Minimum:",
+                   "Period start value (min):",
                    value = 0,
                    min = -365,
                    max = 365,
                    step = 1),
       numericInput("maximum",
-                   "Cycle Maximum:",
+                   "Period end value (max):",
                    value = 1,
                    min = -365,
                    max = 365,
